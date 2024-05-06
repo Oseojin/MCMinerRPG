@@ -1,0 +1,16 @@
+name: MinerRPG
+version: '${version}'
+main: org.osj.minerrpg.MinerRPG
+api-version: '1.20'
+
+commands:
+  purchaseChunk:
+    description: purchase chunk
+    aliases: 청크구매
+  removeChunk:
+    description: remove chunk
+    aliases: 청크제거
+  invite:
+    description: invite [nickname]
+    aliases: 자격부여
+  randtest:

@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="MinerRPG:jar">
+    <output-path>$PROJECT_DIR$/../../../MinecraftServer/1.20.4 MinerRPG/plugins</output-path>
+    <root id="archive" name="MinerRPG.jar">
+      <element id="module-output" name="MinerRPG.main" />
+      <element id="dir-copy" path="$PROJECT_DIR$/src/main/resources" />
+    </root>
+  </artifact>
+</component>
