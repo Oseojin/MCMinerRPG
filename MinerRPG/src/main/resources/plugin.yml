@@ -14,3 +14,4 @@ commands:
     description: invite [nickname]
     aliases: 자격부여
   randtest:
+  guitest:

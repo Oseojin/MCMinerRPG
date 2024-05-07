@@ -23,13 +23,8 @@ public class UsePortalKey implements Listener
 
         if(action.isRightClick())
         {
-            if(itemStack.isEmpty())
-            {
-                return;
-            }
-
-            CustomStack portalKey = CustomStack.byItemStack(itemStack);
-            if(portalKey == null || !portalKey.getPermission().equals("ia.minerrpg:portal_key"))
+            CustomStack portalKey = MinerRPG.getItemManager().isPortalKey(itemStack);
+            if(portalKey == null)
             {
                 return;
             }
@@ -37,6 +32,7 @@ public class UsePortalKey implements Listener
             int index = MinerRPG.getItemManager().getPortalKeyConnect(portalKey.getId());
             Vector minerTargetPos = MinerRPG.getWorldManager().getMinerSpawnPos(index);
             Location targetLoc = new Location(MinerRPG.getWorldManager().getMinerWorld(), minerTargetPos.getX(), minerTargetPos.getY(), minerTargetPos.getZ());
+            itemStack.setAmount(itemStack.getAmount()-1);
 
             player.teleport(targetLoc);
         }

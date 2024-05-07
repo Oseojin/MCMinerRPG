@@ -6,12 +6,15 @@ import org.osj.minerrpg.CHUNKOWNERSHIP.COMMAND.ChunkRemove;
 import org.osj.minerrpg.CHUNKOWNERSHIP.ChunkManager;
 import org.osj.minerrpg.CHUNKOWNERSHIP.EVENT.ChunkInteractEvent;
 import org.osj.minerrpg.DATAMANAGE.ConfigManager;
+import org.osj.minerrpg.GUI.EnhancePickaxeGUI;
+import org.osj.minerrpg.GUI.GUIOpenTestCommand;
 import org.osj.minerrpg.MINER.EVENT.UsePortalKey;
 import org.osj.minerrpg.MINER.EVENT.UserMiningEvent;
 import org.osj.minerrpg.MINER.ItemManager;
 import org.osj.minerrpg.MINER.RandomTest;
 import org.osj.minerrpg.USER.COMMAND.AddWhiteListCommand;
 import org.osj.minerrpg.USER.EVENT.UserJoinEvent;
+import org.osj.minerrpg.USER.EVENT.UserSwitchItemEvent;
 import org.osj.minerrpg.USER.UserManager;
 import org.osj.minerrpg.WORLD.WorldManager;
 
@@ -51,6 +54,8 @@ public final class MinerRPG extends JavaPlugin
         getServer().getPluginManager().registerEvents(new ChunkInteractEvent(), serverInstance);
         getServer().getPluginManager().registerEvents(new UserMiningEvent(), serverInstance);
         getServer().getPluginManager().registerEvents(new UsePortalKey(), serverInstance);
+        getServer().getPluginManager().registerEvents(new UserSwitchItemEvent(), serverInstance);
+        getServer().getPluginManager().registerEvents(new EnhancePickaxeGUI(), serverInstance);
     }
     private void registerCommand()
     {
@@ -58,13 +63,14 @@ public final class MinerRPG extends JavaPlugin
         serverInstance.getServer().getPluginCommand("removeChunk").setExecutor(new ChunkRemove());
         serverInstance.getServer().getPluginCommand("invite").setExecutor(new AddWhiteListCommand());
         serverInstance.getServer().getPluginCommand("randtest").setExecutor(new RandomTest());
+        serverInstance.getServer().getPluginCommand("guitest").setExecutor(new GUIOpenTestCommand());
     }
 
     public static MinerRPG getServerInstance()
     {
         return serverInstance;
     }
-    public static UserManager getUserManagementController()
+    public static UserManager getUserManager()
     {
         return userManager;
     }

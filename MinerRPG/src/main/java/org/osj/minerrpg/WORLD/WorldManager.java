@@ -12,7 +12,7 @@ public class WorldManager
     private World baseWorld;
     private World minerWorld;
     private List<Vector> minerWorldSpawnPosList;
-    private int maxMine = 9;
+    private int maxMine = 5;
 
     public WorldManager()
     {

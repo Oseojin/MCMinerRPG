@@ -142,7 +142,7 @@ public class DB_Connect
 
     public User DB_PlayerInfo(UUID uuid)
     {
-        User user = MinerRPG.getUserManagementController().getUserData(uuid);
+        User user = MinerRPG.getUserManager().getUserData(uuid);
         Connection conn = null;
         // 예외 처리 안해주면 서버 터짐
         try

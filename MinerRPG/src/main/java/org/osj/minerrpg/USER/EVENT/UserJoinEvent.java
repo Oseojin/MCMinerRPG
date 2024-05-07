@@ -31,7 +31,7 @@ public class UserJoinEvent implements Listener
     {
         Player player = event.getPlayer();
         UUID uuid = player.getUniqueId();
-        MinerRPG.getUserManagementController().addUser(player);
+        MinerRPG.getUserManager().addUser(player);
         MinerRPG.getServerInstance().getLogger().info("플레이어 데이터 저장");
 
         if(DB_Connect.getInstance().insertMember(player) == 0)
@@ -50,7 +50,7 @@ public class UserJoinEvent implements Listener
     {
         Player player = event.getPlayer();
         UUID uuid = player.getUniqueId();
-        MinerRPG.getUserManagementController().removeUser(uuid);
+        MinerRPG.getUserManager().removeUser(uuid);
         MinerRPG.getServerInstance().getLogger().info("플레이어 데이터 삭제");
     }
 }

@@ -22,32 +22,27 @@ public class UserMiningEvent implements Listener
         Player player = event.getPlayer();
         Block targetBlock = event.getBlock();
         Material targetMaterial = targetBlock.getType();
-        if(player.getWorld().equals(MinerRPG.getWorldManager().getMinerWorld()) && !MinerRPG.getItemManager().isContain(targetMaterial))
-        {
-            player.sendActionBar(Component.text().color(TextColor.color(0xFF2313)).content("이곳에서는 지정된 블록만 채광할 수 있습니다.").build());
-            event.setCancelled(true);
-            return;
-        }
+
         if(!MinerRPG.getItemManager().isContain(targetMaterial))
         {
+            if(player.getWorld().equals(MinerRPG.getWorldManager().getMinerWorld()))
+            {
+                player.sendActionBar(Component.text().color(TextColor.color(0xFF2313)).content("이곳에서는 지정된 블록만 채광할 수 있습니다.").build());
+                event.setCancelled(true);
+            }
             return;
         }
 
         ItemStack tool = player.getInventory().getItemInMainHand();
-        if(tool.isEmpty())
-        {
-            event.setCancelled(true);
-            return;
-        }
-        CustomStack stack = CustomStack.byItemStack(tool);
-        if(stack == null || !stack.getPermission().equals("ia.minerrpg:pickaxe"))
+        CustomStack stack = MinerRPG.getItemManager().isPickaxe(tool);
+        if(stack == null)
         {
             event.setCancelled(true);
             return;
         }
 
         int pickaxeTier = MinerRPG.getItemManager().getPickaxeTier(stack.getId());
-        int blockTier = MinerRPG.getItemManager().getMineralTier(targetMaterial);
+        int blockTier = MinerRPG.getItemManager().getMineralBlockTier(targetMaterial);
 
         if(pickaxeTier < blockTier - 1)
         {
