@@ -16,7 +16,7 @@ public class ChunkInteractEvent implements Listener
     {
         Player player = event.getPlayer();
 
-        if(player.getWorld().getName().equals(MinerRPG.getWorldManager().getBaseWorld().getName()) && !player.isOp())
+        if(player.getWorld().equals(MinerRPG.getWorldManager().getBaseWorld()) && !player.isOp())
         {
             if(event.getClickedBlock() == null)
             {

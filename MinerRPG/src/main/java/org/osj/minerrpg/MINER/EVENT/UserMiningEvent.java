@@ -1,18 +1,16 @@
 package org.osj.minerrpg.MINER.EVENT;
 
+import dev.lone.itemsadder.api.CustomBlock;
 import dev.lone.itemsadder.api.CustomStack;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextColor;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.inventory.ItemStack;
+import org.osj.minerrpg.MINER.BlockManager;
 import org.osj.minerrpg.MinerRPG;
-
-import java.util.Random;
 
 public class UserMiningEvent implements Listener
 {
@@ -21,41 +19,51 @@ public class UserMiningEvent implements Listener
     {
         Player player = event.getPlayer();
         Block targetBlock = event.getBlock();
-        Material targetMaterial = targetBlock.getType();
-
-        if(!MinerRPG.getItemManager().isContain(targetMaterial))
+        CustomBlock customBlock = CustomBlock.byAlreadyPlaced(targetBlock);
+        if(player.getGameMode().equals(GameMode.CREATIVE))
         {
-            if(player.getWorld().equals(MinerRPG.getWorldManager().getMinerWorld()))
+            return;
+        }
+        CustomStack tool = CustomStack.byItemStack(player.getInventory().getItemInMainHand());
+
+        BlockManager blockManager = MinerRPG.getBlockManager();
+        boolean isSuccess;
+
+        if(customBlock == null)
+        {
+            if(targetBlock.getType().equals(Material.ANCIENT_DEBRIS))
             {
-                player.sendActionBar(Component.text().color(TextColor.color(0xFF2313)).content("이곳에서는 지정된 블록만 채광할 수 있습니다.").build());
-                event.setCancelled(true);
+                isSuccess = blockManager.ancientDebrisBreak(player, tool);
             }
-            return;
+            else
+            {
+                return;
+            }
+        }
+        else
+        {
+            switch (customBlock.getId())
+            {
+                case "silver_ore":
+                    isSuccess = true;
+                    break;
+                case "aquamarine_ore":
+                    isSuccess = blockManager.aquamarineBreak(player, tool);
+                    break;
+                case "burningstone_ore":
+                    isSuccess = blockManager.burningStoneBreak(player, tool);
+                    break;
+                case "steel_ore":
+                    isSuccess = blockManager.steelBreak(player, tool);
+                    break;
+                default:
+                    isSuccess = false;
+            }
         }
 
-        ItemStack tool = player.getInventory().getItemInMainHand();
-        CustomStack stack = MinerRPG.getItemManager().isPickaxe(tool);
-        if(stack == null)
+        if(!isSuccess)
         {
             event.setCancelled(true);
-            return;
-        }
-
-        int pickaxeTier = MinerRPG.getItemManager().getPickaxeTier(stack.getId());
-        int blockTier = MinerRPG.getItemManager().getMineralBlockTier(targetMaterial);
-
-        if(pickaxeTier < blockTier - 1)
-        {
-            event.setCancelled(true);
-            player.sendActionBar(Component.text().color(TextColor.color(0xFF2313)).content("더 높은 등급의 곡괭이가 필요합니다.").build());
-        }
-
-        Random random = new Random();
-        double randMineral = random.nextDouble();
-        player.sendMessage("" + randMineral);
-        if(randMineral <= 0.05)
-        {
-            //event.getBlock().getDrops().add()
         }
     }
 }

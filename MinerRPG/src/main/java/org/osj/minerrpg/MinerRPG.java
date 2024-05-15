@@ -6,15 +6,13 @@ import org.osj.minerrpg.CHUNKOWNERSHIP.COMMAND.ChunkRemove;
 import org.osj.minerrpg.CHUNKOWNERSHIP.ChunkManager;
 import org.osj.minerrpg.CHUNKOWNERSHIP.EVENT.ChunkInteractEvent;
 import org.osj.minerrpg.DATAMANAGE.ConfigManager;
-import org.osj.minerrpg.GUI.EnhancePickaxeGUI;
 import org.osj.minerrpg.GUI.GUIOpenTestCommand;
-import org.osj.minerrpg.MINER.EVENT.UsePortalKey;
+import org.osj.minerrpg.MINER.BlockManager;
 import org.osj.minerrpg.MINER.EVENT.UserMiningEvent;
 import org.osj.minerrpg.MINER.ItemManager;
 import org.osj.minerrpg.MINER.RandomTest;
 import org.osj.minerrpg.USER.COMMAND.AddWhiteListCommand;
 import org.osj.minerrpg.USER.EVENT.UserJoinEvent;
-import org.osj.minerrpg.USER.EVENT.UserSwitchItemEvent;
 import org.osj.minerrpg.USER.UserManager;
 import org.osj.minerrpg.WORLD.WorldManager;
 
@@ -24,8 +22,9 @@ public final class MinerRPG extends JavaPlugin
     private static UserManager userManager;
     private static ConfigManager configManager;
     private static ChunkManager chunkManager;
-    private static WorldManager worldManager;
     private static ItemManager itemManager;
+    private static BlockManager blockManager;
+    private static WorldManager worldManager;
     @Override
     public void onEnable()
     {
@@ -36,6 +35,7 @@ public final class MinerRPG extends JavaPlugin
         userManager = new UserManager();
         chunkManager = new ChunkManager();
         itemManager = new ItemManager();
+        blockManager = new BlockManager();
 
         registerEvent();
         registerCommand();
@@ -53,9 +53,6 @@ public final class MinerRPG extends JavaPlugin
         getServer().getPluginManager().registerEvents(new UserJoinEvent(), serverInstance);
         getServer().getPluginManager().registerEvents(new ChunkInteractEvent(), serverInstance);
         getServer().getPluginManager().registerEvents(new UserMiningEvent(), serverInstance);
-        getServer().getPluginManager().registerEvents(new UsePortalKey(), serverInstance);
-        getServer().getPluginManager().registerEvents(new UserSwitchItemEvent(), serverInstance);
-        getServer().getPluginManager().registerEvents(new EnhancePickaxeGUI(), serverInstance);
     }
     private void registerCommand()
     {
@@ -82,12 +79,16 @@ public final class MinerRPG extends JavaPlugin
     {
         return chunkManager;
     }
-    public static WorldManager getWorldManager()
-    {
-        return worldManager;
-    }
     public static ItemManager getItemManager()
     {
         return itemManager;
+    }
+    public static BlockManager getBlockManager()
+    {
+        return blockManager;
+    }
+    public static WorldManager getWorldManager()
+    {
+        return worldManager;
     }
 }

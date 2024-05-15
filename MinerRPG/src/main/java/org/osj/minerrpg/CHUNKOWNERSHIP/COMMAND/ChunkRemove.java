@@ -2,6 +2,7 @@ package org.osj.minerrpg.CHUNKOWNERSHIP.COMMAND;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
+import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

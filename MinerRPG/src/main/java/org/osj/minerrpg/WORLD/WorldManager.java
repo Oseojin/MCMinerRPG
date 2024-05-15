@@ -2,53 +2,31 @@ package org.osj.minerrpg.WORLD;
 
 import org.bukkit.Bukkit;
 import org.bukkit.World;
-import org.bukkit.util.Vector;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class WorldManager
 {
     private World baseWorld;
-    private World minerWorld;
-    private List<Vector> minerWorldSpawnPosList;
+    private World aMinuteAgoWorld;
+    private World hiddenWorld;
     private int maxMine = 5;
 
     public WorldManager()
     {
         baseWorld = Bukkit.getWorld("base");
-        minerWorld = Bukkit.getWorld("miner");
-        minerWorldSpawnPosList = new ArrayList<>();
-        initMinerPos();
-    }
-
-    private void initMinerPos()
-    {
-        Vector pos = new Vector(0, 0, 0);
-        for(int i = 0; i < maxMine; i++)
-        {
-            minerWorldSpawnPosList.add(pos);
-            if(i % 5 == 0)
-            {
-                pos.add(new Vector(16 * 4, 0, 16 * 4));
-            }
-            else
-            {
-                pos.add(new Vector(16 * 4, 0, 0));
-            }
-        }
+        aMinuteAgoWorld = Bukkit.getWorld("a_minute_ago");
+        hiddenWorld = Bukkit.getWorld("hidden");
     }
 
     public World getBaseWorld()
     {
         return baseWorld;
     }
-    public World getMinerWorld()
+    public World getaMinuteAgoWorld()
     {
-        return minerWorld;
+        return aMinuteAgoWorld;
     }
-    public Vector getMinerSpawnPos(int index)
+    public World getHiddenWorld()
     {
-        return minerWorldSpawnPosList.get(index);
+        return hiddenWorld;
     }
 }
